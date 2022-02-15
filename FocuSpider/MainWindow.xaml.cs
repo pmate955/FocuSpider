@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Runtime.InteropServices;
 
 namespace FocuSpider
 {
@@ -31,6 +33,7 @@ namespace FocuSpider
             this.Title = "FocuSpider";
             this._focuser = new Focuser();
             this._setSerialPorts();
+            SonyWindowClicker.DoClick();
         }
 
         private void _setSerialPorts()
@@ -74,6 +77,7 @@ namespace FocuSpider
             this.btnRRight.IsEnabled = isEnabled;
             this.btnToStart.IsEnabled = isEnabled;
             this.btnToEnd.IsEnabled = isEnabled;
+            this.btnStart.IsEnabled = isEnabled;
         }
 
         private void PictureCountValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -117,6 +121,33 @@ namespace FocuSpider
             await this._focuser.Step(false, Convert.ToInt32(this.slStepCount.Value) * 2);
             this.btnLLeft.Foreground = Brushes.Black;
             this._setEnabledInputs(true);
+        }
+
+        private async void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+            this._setEnabledInputs(false);
+            int pictureCount = Convert.ToInt32(this.txtPictureCount.Text);
+            int seconds = Convert.ToInt32(this.txtTimeout.Text);
+            int steps = Convert.ToInt32(this.slStepCount.Value);
+
+
+            await Task.Run(async () =>
+            {
+
+                for (int i = 0; i < pictureCount; i++)
+                {
+                    this.btnStart.Dispatcher.Invoke(() =>
+                    {
+                        btnStart.Content = $"Images: {i + 1}";
+                    });
+                    await this._focuser.Step(true, steps);
+                    await Task.Delay(seconds * 1000);
+                }
+            });
+
+            this.btnStart.Content = "Start";
+            this._setEnabledInputs(true);
+
         }
     }
 }
