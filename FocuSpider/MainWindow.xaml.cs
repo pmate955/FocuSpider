@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Runtime.InteropServices;
 
 namespace FocuSpider
@@ -29,11 +28,10 @@ namespace FocuSpider
         public MainWindow()
         {
             InitializeComponent();
-            this._setEnabledInputs(false);
             this.Title = "FocuSpider";
+            this._setEnabledInputs(false);
             this._focuser = new Focuser();
             this._setSerialPorts();
-            SonyWindowClicker.DoClick();
         }
 
         private void _setSerialPorts()
@@ -136,6 +134,16 @@ namespace FocuSpider
 
                 for (int i = 0; i < pictureCount; i++)
                 {
+                    bool success = SonyWindowClicker.DoPhoto();
+                    if (!success)
+                    {
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show("The Sony remote application is not available, please start it!", "Error");
+                        });
+                        break;
+                    }
+
                     this.btnStart.Dispatcher.Invoke(() =>
                     {
                         btnStart.Content = $"Images: {i + 1}";
@@ -148,6 +156,48 @@ namespace FocuSpider
             this.btnStart.Content = "Start";
             this._setEnabledInputs(true);
 
+        }
+
+        private async void btnToStart_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this._setEnabledInputs(false);
+                this.btnToStart.Foreground = Brushes.Red;
+                int steps = Convert.ToInt32(this.slStepCount.Value);
+                int pictures = Convert.ToInt32(this.txtPictureCount.Text);
+                await this._focuser.Step(false, steps * pictures);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Picture count is not set!", "Error");
+            }
+            finally
+            {
+                this.btnToStart.Foreground = Brushes.Black;
+                this._setEnabledInputs(true);
+            }
+        }
+
+        private async void btnToEnd_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this._setEnabledInputs(false);
+                this.btnToEnd.Foreground = Brushes.Red;
+                int steps = Convert.ToInt32(this.slStepCount.Value);
+                int pictures = Convert.ToInt32(this.txtPictureCount.Text);
+                await this._focuser.Step(true, steps * pictures);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Picture count is not set!", "Error");
+            }
+            finally
+            {
+                this.btnToEnd.Foreground = Brushes.Black;
+                this._setEnabledInputs(true);
+            }
         }
     }
 }
