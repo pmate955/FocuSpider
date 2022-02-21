@@ -28,10 +28,23 @@ namespace FocuSpider
                 try
                 {
                     this.IsBusy = true;
-                    string command = isForward ? "+" : "-" + steps;
-                    //this._port.WriteLine(command);
-                    //string response = this._port.ReadLine();
-                    Thread.Sleep(500);
+                    byte direction = isForward ? (byte)'+' : (byte)'-';
+                    string stepsStr = steps.ToString();
+                    int digitsCount = stepsStr.Length;
+
+                    byte[] output = new byte[digitsCount + 3];
+                    output[0] = 0x00;
+                    output[1] = direction;
+                    
+                    for(int i = 0; i < digitsCount; i++)
+                    {
+                        output[2 + i] = (byte)stepsStr[i];                        
+                    }
+
+                    output[2 + digitsCount] = 0x01;
+                    this._port.Write(output, 0, output.Length);
+                    string response = this._port.ReadLine();
+                    Console.WriteLine("RESPONSE" + response);
                 }
                 catch (Exception ex)
                 {
@@ -47,11 +60,12 @@ namespace FocuSpider
             try
             {
                 this._port = new SerialPort(portName);
-                this._port.BaudRate = 57600;                                                         //Baudrate
+                this._port.BaudRate = 9600;                                                         //Baudrate
                 this._port.StopBits = StopBits.One;
                 this._port.Parity = Parity.None;
                 this._port.DataBits = 8;
                 this._port.DtrEnable = true;
+                this._port.ReadTimeout = 10000;
                 this._port.Open();
                 this.IsConnected = true;
                 return true;
