@@ -4,8 +4,6 @@ const int M1 = 4;
 const int M2 = 5;
 const int M3 = 6;
 const int M4 = 7;
-boolean buttons[4];
-int Steps = 0;
 
 void setup() {
   pinMode(LED, OUTPUT);
