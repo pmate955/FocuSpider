@@ -3,7 +3,7 @@ void doSteps(bool isForward, int steps) {
   for (int i = 0; i < steps; i++) {
     oneStep(state);
     state = getNextState(isForward, state);
-    delay(5);
+    delayMicroseconds(1500);
   }
 
   oneStep(8);

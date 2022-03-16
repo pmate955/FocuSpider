@@ -89,7 +89,7 @@ namespace FocuSpider
         {
             this._setEnabledInputs(false);
             this.btnRight.Foreground = Brushes.Red;
-            await this._focuser.Step(true, Convert.ToInt32(this.slStepCount.Value));
+            await this._focuser.StepAsync(true, Convert.ToInt32(this.slStepCount.Value));
             this.btnRight.Foreground = Brushes.Black;
             this._setEnabledInputs(true);
         }
@@ -98,7 +98,7 @@ namespace FocuSpider
         {
             this._setEnabledInputs(false);
             this.btnRRight.Foreground = Brushes.Red;
-            await this._focuser.Step(true, Convert.ToInt32(this.slStepCount.Value) * 2);
+            await this._focuser.StepAsync(true, Convert.ToInt32(this.slStepCount.Value) * 2);
             this.btnRRight.Foreground = Brushes.Black;
             this._setEnabledInputs(true);
         }
@@ -107,7 +107,7 @@ namespace FocuSpider
         {
             this._setEnabledInputs(false);
             this.btnLeft.Foreground = Brushes.Red;
-            await this._focuser.Step(false, Convert.ToInt32(this.slStepCount.Value));
+            await this._focuser.StepAsync(false, Convert.ToInt32(this.slStepCount.Value));
             this.btnLeft.Foreground = Brushes.Black;
             this._setEnabledInputs(true);
         }
@@ -116,7 +116,7 @@ namespace FocuSpider
         {
             this._setEnabledInputs(false);
             this.btnLLeft.Foreground = Brushes.Red;
-            await this._focuser.Step(false, Convert.ToInt32(this.slStepCount.Value) * 2);
+            await this._focuser.StepAsync(false, Convert.ToInt32(this.slStepCount.Value) * 2);
             this.btnLLeft.Foreground = Brushes.Black;
             this._setEnabledInputs(true);
         }
@@ -135,6 +135,8 @@ namespace FocuSpider
                 for (int i = 0; i < pictureCount; i++)
                 {
                     bool success = SonyWindowClicker.DoPhoto();
+                    await Task.Delay(seconds * 1000);
+
                     if (!success)
                     {
                         this.Dispatcher.Invoke(() =>
@@ -148,8 +150,8 @@ namespace FocuSpider
                     {
                         btnStart.Content = $"Images: {i + 1}";
                     });
-                    await this._focuser.Step(true, steps);
-                    await Task.Delay(seconds * 1000);
+
+                    this._focuser.Step(true, steps);                    
                 }
             });
 
@@ -166,7 +168,7 @@ namespace FocuSpider
                 this.btnToStart.Foreground = Brushes.Red;
                 int steps = Convert.ToInt32(this.slStepCount.Value);
                 int pictures = Convert.ToInt32(this.txtPictureCount.Text);
-                await this._focuser.Step(false, steps * pictures);
+                await this._focuser.StepAsync(false, steps * pictures);
             }
             catch (Exception)
             {
@@ -187,7 +189,7 @@ namespace FocuSpider
                 this.btnToEnd.Foreground = Brushes.Red;
                 int steps = Convert.ToInt32(this.slStepCount.Value);
                 int pictures = Convert.ToInt32(this.txtPictureCount.Text);
-                await this._focuser.Step(true, steps * pictures);
+                await this._focuser.StepAsync(true, steps * pictures);
             }
             catch (Exception)
             {
