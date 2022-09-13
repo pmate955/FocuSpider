@@ -33,6 +33,7 @@ namespace FocuSpider
             this.btnStart.IsEnabled = false;
             this._focuser = new Focuser();
             this._setSerialPorts();
+            this.cbSerialPort.DropDownOpened += this.cbSerialportsDropDown;
             this._isCapturing = false;
             this.Topmost = cbAlwaysOnTop.IsChecked.GetValueOrDefault();
         }
@@ -230,6 +231,11 @@ namespace FocuSpider
         {
             bool onTop = cbAlwaysOnTop.IsChecked.GetValueOrDefault();
             this.Topmost = onTop;
+        }
+
+        private void cbSerialportsDropDown(object sender, EventArgs e)
+        {
+            this._setSerialPorts();
         }
     }
 }
