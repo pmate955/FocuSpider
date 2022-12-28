@@ -5,33 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FocuSpider"
         mc:Ignorable="d"
-        Title="MainWindow" Height="380" Width="293" ResizeMode="NoResize">
-    <Grid Margin="0,0,0,6">
+        Title="MainWindow" Height="393" Width="286" ResizeMode="NoResize">
+    <Grid Margin="0,0,0,2">
         <UIElement.RenderTransform>
             <MatrixTransform/>
         </UIElement.RenderTransform>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="63*"/>
-            <ColumnDefinition Width="737*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="138*"/>
         </Grid.ColumnDefinitions>
-        <ComboBox x:Name="cbSerialPort" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="93" Margin="72,10,0,0"/>
-        <Button x:Name="Connect" Content="Connect" Grid.Column="1" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="64" Click="Connect_Click" Height="22"/>
-        <Label Content="Serial port:" HorizontalAlignment="Left" Margin="19,7,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Slider x:Name="slStepCount" Grid.Column="1" HorizontalAlignment="Left" Margin="72,72,0,0" VerticalAlignment="Top" Width="162" Maximum="4096" Minimum="128" Value="800" AutomationProperties.Name="Step" AutomationProperties.HelpText="Set step count" AutoToolTipPlacement="TopLeft"/>
-        <Label Content="Step count:" HorizontalAlignment="Left" Margin="19,68,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Button x:Name="btnLLeft" Content="&lt;&lt;" HorizontalAlignment="Left" Margin="2,108,0,0" VerticalAlignment="Top" Width="45" Click="btnLLeft_Click" Grid.Column="1" Height="30"/>
-        <Button x:Name="btnRRight" Content="&gt;&gt;" Grid.Column="1" HorizontalAlignment="Left" Margin="189,108,0,0" VerticalAlignment="Top" Width="45" Click="btnRRight_Click" Height="30"/>
-        <Button x:Name="btnLeft" Content="&lt;" Grid.Column="1" HorizontalAlignment="Left" Margin="61,108,0,0" VerticalAlignment="Top" Width="45" Click="btnLeft_Click" Height="30"/>
-        <Button x:Name="btnRight" Content="&gt;" Grid.Column="1" HorizontalAlignment="Left" Margin="126,108,0,0" VerticalAlignment="Top" Width="45" Click="btnRight_Click" Height="30"/>
-        <Label Content="Picture count:" HorizontalAlignment="Left" Margin="6,145,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Left" Grid.Column="1"/>
-        <TextBox x:Name="txtPictureCount" Grid.Column="1" HorizontalAlignment="Left" Margin="96,145,0,0" Text="10" TextWrapping="Wrap" VerticalAlignment="Top" Width="58" PreviewTextInput="PictureCountValidationTextBox" Height="26" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-        <Button x:Name="btnToStart" Content="Step to start" HorizontalAlignment="Left" Margin="1,186,0,0" VerticalAlignment="Top" Width="105" Height="30" Click="btnToStart_Click" Grid.Column="1"/>
-        <Button x:Name="btnToEnd" Content="Step to end" Grid.Column="1" HorizontalAlignment="Left" Margin="126,186,0,0" VerticalAlignment="Top" Width="108" IsCancel="True" Height="30" Click="btnToEnd_Click"/>
-        <Button x:Name="btnStart" Content="Start" Grid.Column="1" HorizontalAlignment="Left" Margin="57,272,0,0" VerticalAlignment="Top" Height="30" Width="123" Click="btnStart_Click"/>
-        <Label Content="Time between pictures (s):" HorizontalAlignment="Left" Margin="19,236,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="txtTimeout" Grid.Column="1" HorizontalAlignment="Left" Margin="153,236,0,0" Text="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="81" Height="26" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-        <Label x:Name="lblInfo" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="70,307,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="cbAlwaysOnTop" Content="Always on top" HorizontalAlignment="Left" Margin="23,48,0,0" VerticalAlignment="Top" Click="cbAlwaysOnTop_Click" Grid.ColumnSpan="2" IsChecked="True"/>
+        <ComboBox x:Name="cbSerialPort" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="93" Margin="72,18,0,0" Height="22"/>
+        <Button x:Name="Connect" Content="Connect" Grid.Column="1" HorizontalAlignment="Left" Margin="170,18,0,0" VerticalAlignment="Top" Width="64" Click="Connect_Click" Height="22"/>
+        <Label Content="Serial port:" HorizontalAlignment="Left" Margin="3,14,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="67"/>
+        <Slider x:Name="slStepCount" Grid.Column="1" HorizontalAlignment="Left" Margin="70,105,0,0" VerticalAlignment="Top" Width="183" Maximum="7000" Minimum="128" Value="800" AutomationProperties.Name="Step" AutomationProperties.HelpText="Set step count" AutoToolTipPlacement="TopLeft" Height="18"/>
+        <Label Content="Step count:" HorizontalAlignment="Left" Margin="7,97,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="69"/>
+        <Button x:Name="btnLLeft" Content="&lt;&lt;" HorizontalAlignment="Left" Margin="3,141,0,0" VerticalAlignment="Top" Width="45" Click="btnLLeft_Click" Grid.Column="1" Height="30"/>
+        <Button x:Name="btnRRight" Content="&gt;&gt;" Grid.Column="1" HorizontalAlignment="Left" Margin="208,141,0,0" VerticalAlignment="Top" Width="45" Click="btnRRight_Click" Height="30"/>
+        <Button x:Name="btnLeft" Content="&lt;" Grid.Column="1" HorizontalAlignment="Left" Margin="57,141,0,0" VerticalAlignment="Top" Width="45" Click="btnLeft_Click" Height="30"/>
+        <Button x:Name="btnRight" Content="&gt;" Grid.Column="1" HorizontalAlignment="Left" Margin="151,141,0,0" VerticalAlignment="Top" Width="45" Click="btnRight_Click" Height="30"/>
+        <Label Content="Picture count:" HorizontalAlignment="Left" Margin="1,189,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Left" Grid.Column="1" Height="26" Width="83"/>
+        <TextBox x:Name="txtPictureCount" Grid.Column="1" HorizontalAlignment="Left" Margin="83,188,0,0" Text="10" TextWrapping="Wrap" VerticalAlignment="Top" Width="58" PreviewTextInput="PictureCountValidationTextBox" Height="26" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+        <Button x:Name="btnToStart" Content="Step to start" HorizontalAlignment="Left" Margin="2,228,0,0" VerticalAlignment="Top" Width="105" Height="30" Click="btnToStart_Click" Grid.Column="1"/>
+        <Button x:Name="btnToEnd" Content="Step to end" Grid.Column="1" HorizontalAlignment="Left" Margin="148,228,0,0" VerticalAlignment="Top" Width="108" IsCancel="True" Height="30" Click="btnToEnd_Click"/>
+        <Button x:Name="btnStart" Content="Start" Grid.Column="1" HorizontalAlignment="Left" Margin="72,299,0,0" VerticalAlignment="Top" Height="30" Width="122" Click="btnStart_Click"/>
+        <Label Content="Time between pictures (s):" HorizontalAlignment="Left" Margin="1,268,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="148"/>
+        <TextBox x:Name="txtTimeout" Grid.Column="1" HorizontalAlignment="Left" Margin="153,268,0,0" Text="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="81" Height="26" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+        <Label x:Name="lblInfo" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="65,334,0,0" VerticalAlignment="Top" Height="26" Width="10"/>
+        <CheckBox x:Name="cbAlwaysOnTop" Content="Always on top" HorizontalAlignment="Left" Margin="156,195,0,0" VerticalAlignment="Top" Click="cbAlwaysOnTop_Click" IsChecked="True" Height="30" Width="104" Grid.Column="1"/>
+        <Button x:Name="PresetA" Content="PresetA" HorizontalAlignment="Left" Margin="8,57,0,0" VerticalAlignment="Top" Height="30" Grid.Column="1" Width="44" Click="PresetBtn_Click" MouseRightButtonDown="PresetBtn_MouseRightButtonDown" Tag="0"/>
+        <Button x:Name="PresetB" Grid.Column="1" Content="PresetB" HorizontalAlignment="Left" Margin="72,57,0,0" VerticalAlignment="Top" Height="30" Width="43" Click="PresetBtn_Click" MouseRightButtonDown="PresetBtn_MouseRightButtonDown" Tag="1"/>
+        <Button x:Name="PresetC" Grid.Column="1" Content="PresetC" HorizontalAlignment="Left" Margin="133,57,0,0" VerticalAlignment="Top" Height="30" Width="44" Click="PresetBtn_Click" MouseRightButtonDown="PresetBtn_MouseRightButtonDown" Tag="2"/>
+        <Button x:Name="PresetD" Grid.Column="1" Content="PresetD" HorizontalAlignment="Left" Margin="194,57,0,0" VerticalAlignment="Top" Height="30" Width="44" Click="PresetBtn_Click" MouseRightButtonDown="PresetBtn_MouseRightButtonDown" Tag="3"/>
 
     </Grid>
 </Window>

@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
+using System.Configuration;
+using System.ComponentModel;
 
 namespace FocuSpider
 {
@@ -36,6 +38,8 @@ namespace FocuSpider
             this.cbSerialPort.DropDownOpened += this.cbSerialportsDropDown;
             this._isCapturing = false;
             this.Topmost = cbAlwaysOnTop.IsChecked.GetValueOrDefault();
+            this.loadState();
+            Closing += MainWindow_Closing;
         }
 
         private bool _isCapturing;
@@ -83,6 +87,10 @@ namespace FocuSpider
             this.btnRRight.IsEnabled = isEnabled;
             this.btnToStart.IsEnabled = isEnabled;
             this.btnToEnd.IsEnabled = isEnabled;
+            this.PresetA.IsEnabled = isEnabled;
+            this.PresetB.IsEnabled = isEnabled;
+            this.PresetC.IsEnabled = isEnabled;
+            this.PresetD.IsEnabled = isEnabled;
             //this.btnStart.IsEnabled = isEnabled;
         }
 
@@ -236,6 +244,79 @@ namespace FocuSpider
         private void cbSerialportsDropDown(object sender, EventArgs e)
         {
             this._setSerialPorts();
+        }
+
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            this.saveState();
+        }
+
+        /// <summary>
+        /// Sets the default values for controls
+        /// </summary>
+        private void loadState()
+        {
+            Config.Init();
+            this.cbAlwaysOnTop.IsChecked = Config.IsAlwaysOnTop;
+            this.Topmost = Config.IsAlwaysOnTop;
+            this.slStepCount.Value = Config.SliderValue;
+            this.txtPictureCount.Text = Config.PictureCount.ToString();
+            this.txtTimeout.Text = Config.TimeBetweenPictures.ToString();
+            this.PresetA.Content = Config.Presets[0].Name;
+            this.PresetB.Content = Config.Presets[1].Name;
+            this.PresetC.Content = Config.Presets[2].Name;
+            this.PresetD.Content = Config.Presets[3].Name;
+        }
+
+        /// <summary>
+        /// Saves the state of the window to xml file
+        /// </summary>
+        private void saveState()
+        {
+            Config.IsAlwaysOnTop = this.cbAlwaysOnTop.IsChecked.GetValueOrDefault();
+            Config.SliderValue = Convert.ToInt32(this.slStepCount.Value);
+            Config.PictureCount = Convert.ToInt32(this.txtPictureCount.Text);
+            Config.TimeBetweenPictures = Convert.ToInt32(this.txtTimeout.Text);
+            Config.SaveConfig();
+        }
+
+        /// <summary>
+        /// Set the steps sider value to a given preset
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PresetBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string tag = (sender as Button).Tag.ToString();
+            int index = Convert.ToInt32(tag);
+            if(Config.Presets.Count > index)
+            {
+                this.slStepCount.Value = Config.Presets[index].Steps;
+            }
+        }
+
+        /// <summary>
+        /// Modify the preset value and name
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PresetBtn_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            string tag = (sender as Button).Tag.ToString();
+            int index = Convert.ToInt32(tag);
+            if (Config.Presets.Count > index)
+            {
+                var preset = Config.Presets[index];
+                PresetDialogbox pdb = new PresetDialogbox(preset);
+                pdb.Owner = this;
+
+                if(pdb.ShowDialog() == true)
+                {
+                    preset.Name = pdb.Name;
+                    preset.Steps = pdb.Steps;
+                    (sender as Button).Content = preset.Name;
+                }
+            }
         }
     }
 }

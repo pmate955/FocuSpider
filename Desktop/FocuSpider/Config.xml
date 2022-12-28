@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<settings>
+	<IsAlwaysOnTop>true</IsAlwaysOnTop>
+	<SliderValue>800</SliderValue>
+	<PictureCount>10</PictureCount>
+	<TimeBetweenPictures>3</TimeBetweenPictures>
+	<Presets>
+		<Preset>
+			<Name>4x</Name>
+			<Steps>6400</Steps>
+		</Preset>
+		<Preset>
+			<Name>10x</Name>
+			<Steps>3200</Steps>
+		</Preset>
+		<Preset>
+			<Name>20x</Name>
+			<Steps>1600</Steps>
+		</Preset>
+		<Preset>
+			<Name>40x</Name>
+			<Steps>800</Steps>
+		</Preset>
+	</Presets>
+</settings>
